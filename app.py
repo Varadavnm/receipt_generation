@@ -72,20 +72,20 @@ def generate_receipt(data, output_path):
 
     # Title Section
     c.setFont("Helvetica-Bold", 14)
-    c.drawCentredString(width / 2, top_y - 0.5 * inch, "BOMBAY YOGAKSHEMA SABHA (Regd.)")
+    c.drawCentredString(width / 2, top_y - 0.5 * inch, "BOrganisation name")
 
     # Sub-header and contact details
     c.setFont("Helvetica", 10)
-    c.drawCentredString(width / 2, top_y - 0.8 * inch, "(Reg. Under the Society's Reg. Act 1960 No. 26/76 G.B.B.S.D. Bombay)")
-    c.drawCentredString(width / 2, top_y - 1.0 * inch, "(Reg. Under the Bombay Public Trust Act 1950 No. F3873 Bombay)")
+    c.drawCentredString(width / 2, top_y - 0.8 * inch, "(Act1 )")
+    c.drawCentredString(width / 2, top_y - 1.0 * inch, "(Act 2)")
     c.line(1 * inch, top_y - 1.2 * inch, 7.5 * inch, top_y - 1.2 * inch)
 
     # Admin Office Information and PAN
-    c.drawCentredString(width / 2, top_y - 1.5 * inch, "Admn. Office : G-2, Nav Haridarshan CHS. Ltd., Jai Hind Colony, G. Gupte Road,")
-    c.drawCentredString(width / 2, top_y - 1.7 * inch, "Dombivli (West) 421 201")
+    c.drawCentredString(width / 2, top_y - 1.5 * inch, "Address 1")
+    c.drawCentredString(width / 2, top_y - 1.7 * inch, "Address 2")
     c.drawCentredString(width / 2, top_y - 1.9 * inch, "(I.T. Exemption No. THN/ CIT-I/Tech-I/80 G/389/2007-08/3031)")
     c.setFont("Helvetica-Bold", 12)
-    c.drawCentredString(width / 2, top_y - 2.4 * inch, "PAN No. AAAAB4113E")
+    c.drawCentredString(width / 2, top_y - 2.4 * inch, "PAN No. AAAA0000A")
 
     # Receipt Details
     c.setFont("Helvetica", 10)
@@ -130,15 +130,12 @@ def generate_receipt(data, output_path):
     c.setFont("Helvetica", 12)
     amount = int(data['Amount'])
     c.drawString(1.2 * inch, top_y - 4.6 * inch, f"RS. {amount} /-")
-    c.drawRightString(6.8 * inch, top_y - 6.1 * inch, "For Bombay Yogakshema Sabha (Regd.)")
+    c.drawRightString(6.8 * inch, top_y - 6.1 * inch, "For Organisation Name (Regd.)")
 
 
 
 
-    # # Load and attach signature image if it exists
-    # signature_path = r"C:\Users\umesh\OneDrive\Documents\Datascience\Jithin_mullappilli\sign.jpg"
-    # stamp_path = r"C:\Users\umesh\OneDrive\Documents\Datascience\Jithin_mullappilli\stamp.jpg"
-    # Draw the signature
+    
     if os.path.exists(signature_path):
         try:
             # Signature adjustment: bigger and shifted left
@@ -260,117 +257,7 @@ def process_and_send_emails(file_path):
 
     messagebox.showinfo("Success", "Emails sent successfully.")
 
-# def process_and_send_emails(file_path):
-#     # Load Excel file and ensure column names match
-#     df = pd.read_excel(file_path)
-
-#     # Directory to save PDFs
-#     output_dir = "receipts"
-#     os.makedirs(output_dir, exist_ok=True)  # Create the directory if it doesn't exist
-
-#     # Process each row in the DataFrame
-#     for _, row in df.iterrows():
-#         # Check and convert the 'Amount' value to float, handling empty or invalid entries
-#         amount_str = str(row['Amount']).strip()
-#         if not amount_str or not re.search(r'\d', amount_str):
-#             print("Warning: Skipping row due to missing or invalid Amount value.")
-#             continue
-
-#         # Clean and convert the amount value
-#         try:
-#             amount_number = float(re.sub(r'[^\d.]', '', amount_str))
-#         except ValueError:
-#             print(f"Warning: Invalid Amount format for row: {row['Amount']}")
-#             continue
-
-#         # Convert the amount to words
-#         amount_in_words = num2words(amount_number, to='currency', lang='en_IN')
-
-#         # Prepare data for PDF generation
-#         receipt_no = int(row['Receipt No.'])  # Convert to integer to remove `.0`
-#         date = pd.to_datetime(row['DATE']).strftime('%d-%m-%Y')  # Format date to remove time
-#         towards = row['Towards'] if 'Towards' in row else 'Donation - Anudanind Ashamrashala'
-        
-#         data = {
-#             'Receipt_No': receipt_no,
-#             'Date': date,
-#             'Name': row['Received From'],
-#             'Amount': amount_number,
-#             'Amount_in_words': amount_in_words,
-#             'Payment_Mode': row['COD'],
-#             'Towards': towards,
-#             'Email': row['Email ID']
-#         }
-#         print(data['Payment_Mode'])
-
-
-#         output_dir = tempfile.mkdtemp(prefix="receipts_")
-
-#         # Create the PDF file path in the 'receipts' directory
-#         output_path = os.path.join(output_dir, f"Receipt_{receipt_no}.pdf")
-
-#         # Generate PDF and send email
-#         generate_receipt(data, output_path)
-#         send_email(data['Email'], "Your Donation Receipt", "Please find attached your donation receipt.", output_path)
-
-#         # Delete the PDF after sending the email
-#         os.remove(output_path)
-#         print(f"Deleted the file: {output_path}")
-
-#     messagebox.showinfo("Success", "Emails sent successfully.")
-
-
-# # # Function to process the Excel file and send emails
-# def process_and_send_emails(file_path):
-#     # Load Excel file and ensure column names match
-#     df = pd.read_excel(file_path)
-
-#     # Process each row in the DataFrame
-#     for _, row in df.iterrows():
-#         # Check and convert the 'Amount' value to float, handling empty or invalid entries
-#         amount_str = str(row['Amount']).strip()
-#         if not amount_str or not re.search(r'\d', amount_str):
-#             print("Warning: Skipping row due to missing or invalid Amount value.")
-#             continue
-
-#         # Clean and convert the amount value
-#         try:
-#             amount_number = float(re.sub(r'[^\d.]', '', amount_str))
-#         except ValueError:
-#             print(f"Warning: Invalid Amount format for row: {row['Amount']}")
-#             continue
-
-#         # Convert the amount to words
-#         amount_in_words = num2words(amount_number, to='currency', lang='en_IN')
-
-#         # Prepare data for PDF generation
-#         receipt_no = int(row['Receipt No.'])  # Convert to integer to remove `.0`
-#         date = pd.to_datetime(row['DATE']).strftime('%d-%m-%Y')  # Format date to remove time
-#         # Add 'Towards' field from the row (assuming it exists in the Excel file)
-#         towards = row['Towards'] if 'Towards' in row else 'Donation - Anudanind Ashamrashala'
-#         data = {
-#             'Receipt_No': receipt_no,
-#             'Date': date,
-#             'Name': row['Received From'],
-#             'Amount': amount_number,
-#             'Amount_in_words': amount_in_words,
-#             'Payment_Mode': row['COD'],
-#             'Towards': towards,  # Add Towards to the data dictionary
-#             'Email': row['Email ID']
-#         }
-#         print(data['Payment_Mode'])
-
-#         # Create a temporary file in the system's temp directory
-#         with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as temp_file:
-#             output_path = temp_file.name
-
-
-#         # Generate PDF and send email
-#         generate_receipt(data, output_path)
-#         send_email(data['Email'], "Your Donation Receipt", "Please find attached your donation receipt.", output_path)
-
-#     messagebox.showinfo("Success", "Emails sent successfully.")
-
+#
 # GUI Setup
 def on_browse_file():
     file_path = filedialog.askopenfilename(filetypes=[("Excel files", "*.xlsx *.xls")])
